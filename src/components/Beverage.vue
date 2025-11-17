@@ -4,18 +4,26 @@
     <Hot v-else />
     <Contents>
       <template v-slot:top>
-        <Creamer v-if="beverageStore.currentCreamer?.color !== 'transparent'" />
+        <Creamer v-if="hasCreamer" :creamer="beverage.creamer" :isIced="isIced" />
       </template>
       <template v-slot:mid>
-        <Syrup v-if="beverageStore.currentSyrup?.color !== 'transparent'" />
+        <Syrup v-if="hasSyrup" :syrup="beverage.syrup" />
       </template>
       <template v-slot:bottom>
-        <Base />
+        <Base 
+          :drink="beverage.base" 
+          :creamer="beverage.creamer" 
+          :syrup="beverage.syrup"
+          :hasCreamer="hasCreamer"
+        />
       </template>
     </Contents>
   </Mug>
 </template>
+
 <script setup lang="ts">
+import { computed } from 'vue';
+import type { BeverageType } from '../types/beverage';
 import Contents from "./Contents.vue";
 import Mug from "./Mug.vue";
 import Syrup from "./Syrup.vue";
@@ -24,12 +32,19 @@ import Creamer from "./Creamer.vue";
 import Hot from "./Hot.vue";
 import Cold from "./Cold.vue";
 
-import { useBeverageStore } from "../stores/beverageStore";
-
-const beverageStore = useBeverageStore();
-
 type Props = {
-  isIced: boolean;
+  beverage: BeverageType;
 };
-defineProps<Props>();
+
+const props = defineProps<Props>();
+
+const isIced = computed(() => props.beverage.temp.toLowerCase() === 'cold');
+
+const hasCreamer = computed(() => {
+  return props.beverage.creamer.name !== 'No Cream';
+});
+
+const hasSyrup = computed(() => {
+  return props.beverage.syrup.name !== 'No Syrup';
+});
 </script>

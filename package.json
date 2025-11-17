@@ -12,7 +12,7 @@
   "dependencies": {
     "firebase": "^11.6.0",
     "pinia": "^3.0.1",
-    "pinia-plugin-persistedstate": "^4.2.0",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "vue": "^3.4.19"
   },
   "devDependencies": {
