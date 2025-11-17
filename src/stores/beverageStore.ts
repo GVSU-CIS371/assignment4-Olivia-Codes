@@ -12,7 +12,6 @@ import {
   getDocs,
   addDoc,
   onSnapshot,
-  DocumentData,
 } from "firebase/firestore";
 
 export const useBeverageStore = defineStore("BeverageStore", {
